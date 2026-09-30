@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SB 91888 기획전 쿠폰 (샘플)</title>
+<style>
+/* ===== 문서 틀(sb-) : 탭 바 · 블록 · Description · 마커 ===== */
+:root{
+  --sb-bar-h:52px; --sb-desc-w:340px;
+  --sb-bg:#eef1f4; --sb-surface:#fff; --sb-fg:#1f2933; --sb-muted:#66727f; --sb-line:#dde2e8;
+  --sb-accent:#1f5fbf; --sb-mark:#e03131; --sb-hl:#fff3d6; --sb-rev:#1f5fbf; --sb-todo:#b35c00;
+  --sb-font:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--sb-bg);color:var(--sb-fg);font:14px/1.6 var(--sb-font)}
+.sb-bar{position:sticky;top:0;z-index:50;height:var(--sb-bar-h);display:flex;align-items:center;gap:20px;padding:0 20px;background:var(--sb-surface);border-bottom:1px solid var(--sb-line)}
+.sb-doc{white-space:nowrap;font-weight:700}
+.sb-doc small{font-weight:400;color:var(--sb-muted);margin-left:6px}
+.sb-tabs{display:flex;gap:2px;overflow-x:auto;flex:1;align-self:stretch}
+.sb-tab{display:flex;align-items:center;padding:0 14px;color:var(--sb-muted);text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent}
+.sb-tab b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:4px;background:var(--sb-bg);font-size:12px;margin-right:6px}
+.sb-tab.on{color:var(--sb-fg);font-weight:700;border-bottom-color:var(--sb-accent)}
+.sb-tab.on b{background:var(--sb-accent);color:#fff}
+.sb-toggle{font:600 12px var(--sb-font);padding:7px 12px;border-radius:999px;border:1px solid var(--sb-line);background:var(--sb-surface);color:var(--sb-fg);cursor:pointer;white-space:nowrap}
+.sb-toggle::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--sb-mark);margin-right:6px}
+.sb-off .sb-toggle::before{background:#adb5bd}
+
+.sb-panel{padding:24px 20px 64px}
+.sb-panel:not(.on){display:none}
+.sb-panel h1{font-size:22px;margin:0 0 4px}
+.sb-lead{color:var(--sb-muted);margin:0 0 20px}
+
+/* 1페이지 문서 */
+.sb-doc-page{max-width:980px;background:var(--sb-surface);border:1px solid var(--sb-line);border-radius:8px;padding:28px 32px}
+.sb-doc-page h2{font-size:17px;margin:28px 0 8px;padding-top:16px;border-top:1px solid var(--sb-line)}
+.sb-doc-page h2:first-of-type{border-top:0;padding-top:0;margin-top:8px}
+.sb-doc-page table{border-collapse:collapse;width:100%;font-size:13.5px;margin:6px 0}
+.sb-doc-page th,.sb-doc-page td{border:1px solid var(--sb-line);padding:7px 10px;text-align:left;vertical-align:top}
+.sb-doc-page th{background:#f6f8fa;font-weight:600;white-space:nowrap}
+.sb-pid{font:600 12px ui-monospace,Consolas,monospace;color:var(--sb-accent);white-space:nowrap}
+[id]{scroll-margin-top:calc(var(--sb-bar-h) + 16px)}
+
+/* 화면 + Description 블록 */
+.sb-block{display:grid;grid-template-columns:minmax(0,1fr) var(--sb-desc-w);gap:20px;align-items:start;margin-bottom:32px}
+.sb-off .sb-block{grid-template-columns:minmax(0,1fr)}
+.sb-caption{grid-column:1/-1;margin:0;font-weight:700;font-size:15px}
+.sb-caption span{color:var(--sb-muted);font-weight:400;margin-left:8px;font-size:13px}
+.sb-screen{overflow-x:auto;padding:12px}
+.sb-canvas{width:var(--canvas-w,1080px);background:#fff;border:1px solid var(--sb-line);box-shadow:0 1px 3px rgba(0,0,0,.06)}
+
+.sb-desc{position:sticky;top:calc(var(--sb-bar-h) + 12px);max-height:calc(100vh - var(--sb-bar-h) - 24px);overflow-y:auto;background:var(--sb-surface);border:1px solid var(--sb-line);border-radius:8px;padding:14px 14px 8px}
+.sb-off .sb-desc{display:none}
+.sb-desc h3{margin:0 0 6px;font-size:12px;letter-spacing:.08em;color:var(--sb-muted)}
+.sb-desc>ol{list-style:none;margin:0;padding:0}
+.sb-desc>ol>li{position:relative;padding:10px 6px 10px 38px;border-top:1px solid var(--sb-line);border-radius:4px;cursor:pointer;font-size:13px}
+.sb-desc>ol>li::before{content:attr(data-desc);position:absolute;left:4px;top:11px}
+.sb-desc>ol>li>strong{display:block;font-size:13.5px;margin-bottom:2px}
+.sb-desc ul{margin:2px 0 0;padding-left:16px}
+.sb-desc ul li{margin:1px 0}
+.sb-desc a{color:var(--sb-accent)}
+.sb-desc li[data-rev]>strong::after{content:attr(data-rev) " 변경";margin-left:6px;padding:0 6px;border-radius:999px;font-size:11px;font-weight:600;color:#fff;background:var(--sb-rev);vertical-align:1px}
+.sb-desc>ol>li.sb-hl{background:var(--sb-hl)}
+.sb-desc>ol>li.sb-orphan::before{background:#adb5bd}
+.sb-todo{font-style:normal;color:var(--sb-todo)}
+.sb-todo::before{content:"확인 필요";display:inline-block;margin-right:4px;padding:0 6px;border-radius:999px;font-size:11px;font-weight:600;color:#fff;background:var(--sb-todo)}
+
+/* 번호 마커 (화면 쪽 배지 + 설명 쪽 번호 공통) */
+.sb-mark,.sb-desc>ol>li::before{min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--sb-mark);color:#fff;font:700 11px/20px var(--sb-font);text-align:center;letter-spacing:0;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sb-mark{position:absolute;top:-9px;left:-9px;z-index:20;box-shadow:0 0 0 2px #fff;cursor:pointer;user-select:none}
+.sb-mark.sb-inset{top:3px;left:3px}
+.sb-off .sb-mark{display:none}
+.sb-target-hl{outline:2px dashed var(--sb-mark);outline-offset:3px}
+.sb-flash{animation:sb-flash 1.4s ease-out}
+@keyframes sb-flash{0%,50%{outline:3px solid var(--sb-mark);outline-offset:3px}100%{outline:3px solid transparent;outline-offset:3px}}
+@media (prefers-reduced-motion:reduce){.sb-flash{animation:none}}
+
+@media (max-width:900px){.sb-block{grid-template-columns:minmax(0,1fr)}.sb-desc{position:static;max-height:none}.sb-doc small{display:none}}
+
+/* 인쇄: 탭 바 숨기고 모든 탭을 순서대로, 탭마다 새 페이지 */
+@page{size:A4 landscape;margin:10mm}
+@media print{
+  body{background:#fff}
+  .sb-bar{display:none}
+  .sb-panel{display:block!important;padding:0 0 12px;break-before:page}
+  .sb-panel:first-of-type{break-before:auto}
+  .sb-off .sb-panel .sb-desc{display:none}
+  .sb-block{grid-template-columns:minmax(0,1fr) 280px;break-inside:avoid}
+  .sb-desc{position:static;max-height:none;overflow:visible}
+  .sb-screen{overflow:visible;padding:8px}
+  .sb-canvas{zoom:.62}
+  .sb-doc-page{border:0;padding:0;max-width:none}
+}
+
+/* ===== 화면 목업(.scr 안으로 스코프) : 관리자 PC 1080px ===== */
+.scr{padding:24px 28px 28px;color:#222;font-size:13px}
+.scr .crumb{color:#8a939c;font-size:12px}
+.scr h2{font-size:20px;margin:2px 0 16px}
+.scr .search{display:grid;grid-template-columns:90px 1fr 90px 1fr;gap:10px 12px;align-items:center;padding:16px;background:#f7f8fa;border:1px solid #e3e6ea;border-radius:6px}
+.scr .search label{font-weight:600;color:#555}
+.scr input,.scr select{font:inherit;height:32px;padding:0 8px;border:1px solid #cfd5dc;border-radius:4px;background:#fff;min-width:0}
+.scr .range{display:flex;align-items:center;gap:6px}
+.scr .range input{width:130px}
+.scr .field{display:flex;align-items:center;gap:6px}
+.scr .field>*{flex:1}
+.scr .btns{grid-column:1/-1;display:flex;justify-content:center;gap:8px;padding-top:4px}
+.scr .btn{font:inherit;height:32px;padding:0 14px;border-radius:4px;border:1px solid #cfd5dc;background:#fff;color:#333;cursor:pointer}
+.scr .btn.pri{background:#2b5fd9;border-color:#2b5fd9;color:#fff}
+.scr .btn.sm{height:26px;padding:0 9px;font-size:12px}
+.scr .toolbar{display:flex;align-items:center;gap:8px;margin:20px 0 8px}
+.scr .toolbar .cnt{margin-right:auto}
+.scr .toolbar .cnt b{color:#2b5fd9}
+.scr table{width:100%;border-collapse:collapse;border-top:2px solid #333}
+.scr th,.scr td{padding:9px 8px;border-bottom:1px solid #e3e6ea;text-align:center;white-space:nowrap}
+.scr th{background:#f7f8fa;font-weight:600}
+.scr td.l{text-align:left}
+.scr td a{color:#2b5fd9}
+.scr .st{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px}
+.scr .st.run{background:#e7f5ec;color:#1e7a45}.scr .st.wait{background:#eef2f7;color:#56657a}.scr .st.end{background:#f1f1f1;color:#888}.scr .st.stop{background:#fdecec;color:#c62828}
+.scr .paging{display:flex;gap:4px;width:fit-content;margin:16px auto 0}
+.scr .paging span{min-width:28px;height:28px;display:grid;place-items:center;border:1px solid #e3e6ea;border-radius:4px;font-size:12px}
+.scr .paging .cur{background:#333;color:#fff;border-color:#333}
+.scr.dim{background:rgba(0,0,0,.45);padding:48px;display:grid;place-items:center;min-height:320px}
+.scr .modal{width:400px;background:#fff;border-radius:8px;padding:24px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.scr .modal p{margin:0 0 6px}
+.scr .modal .sub{color:#777;font-size:12px;margin-bottom:18px}
+.scr .modal .btns{display:flex;justify-content:center;gap:8px}
+.scr .form{display:grid;grid-template-columns:140px 1fr;border-top:2px solid #333}
+.scr .form>div{padding:10px 12px;border-bottom:1px solid #e3e6ea;display:flex;align-items:center;gap:8px}
+.scr .form>div:nth-child(odd){background:#f7f8fa;font-weight:600}
+.scr .req::after{content:" *";color:#e03131}
+.scr .radio{display:flex;gap:16px}
+.scr .radio label{display:flex;align-items:center;gap:4px;font-weight:400}
+.scr .radio input{height:auto}
+.scr .foot{display:flex;gap:8px;width:fit-content;margin:20px auto 0}
+</style>
+</head>
+<body>
+
+<header class="sb-bar">
+  <div class="sb-doc">SB 91888 기획전 쿠폰<small>v1.1 · 2026-09-30 · 샘플</small></div>
+  <nav class="sb-tabs" role="tablist">
+    <a class="sb-tab" href="#t1" role="tab"><b>1</b>정책·배경</a>
+    <a class="sb-tab" href="#t2" role="tab"><b>2</b>[BO] 쿠폰관리</a>
+    <a class="sb-tab" href="#t3" role="tab"><b>3</b>[BO] 쿠폰등록</a>
+  </nav>
+  <button class="sb-toggle" type="button" title="설명 켜기/끄기 (D)">Description</button>
+</header>
+
+<!-- ================= 1. 정책·배경 ================= -->
+<section class="sb-panel" id="t1" data-no="1">
+  <div class="sb-doc-page">
+    <h1>정책·배경</h1>
+    <p class="sb-lead">※ 샘플 문서입니다. 정책 내용은 구조를 보여주기 위한 예시예요.</p>
+
+    <h2>배경·목적</h2>
+    <p>기획전 단위로 전용 쿠폰을 발급해 기획전 참여와 구매 전환을 높인다. 관리자는 기획전별 쿠폰을 등록·조회·중지할 수 있어야 한다.</p>
+
+    <h2>범위</h2>
+    <table>
+      <tr><th>대상 화면</th><td>[BO] 쿠폰관리(목록), [BO] 쿠폰등록 — 사용자 화면(FO)은 2차 범위</td></tr>
+      <tr><th>대상 사용자</th><td>프로모션 담당 관리자(쿠폰 권한 보유)</td></tr>
+    </table>
+
+    <h2>용어</h2>
+    <table>
+      <tr><th>발급</th><td>회원이 쿠폰을 받아 쿠폰함에 들어간 상태</td></tr>
+      <tr><th>사용</th><td>주문 결제에 쿠폰이 적용되어 결제 완료된 상태</td></tr>
+    </table>
+
+    <h2>정책</h2>
+    <table>
+      <tr><th>ID</th><th>항목</th><th>내용</th></tr>
+      <tr id="P-01"><td class="sb-pid">P-01</td><td>쿠폰 유형</td><td>정액 할인 / 정률 할인(최대 할인금액 필수) 2종</td></tr>
+      <tr id="P-02"><td class="sb-pid">P-02</td><td>상태</td><td>발급기간 기준 자동 전환: <b>대기</b>(시작 전) → <b>진행</b>(기간 내) → <b>종료</b>(기간 경과). 관리자 수동 <b>중지</b> 가능</td></tr>
+      <tr id="P-03"><td class="sb-pid">P-03</td><td>발급 한도</td><td>총 발급수량 소진 시 발급 불가. 1인 1매</td></tr>
+      <tr id="P-04"><td class="sb-pid">P-04</td><td>중복 사용</td><td>기획전 쿠폰끼리 중복 불가, 장바구니 쿠폰과는 중복 가능</td></tr>
+      <tr id="P-05"><td class="sb-pid">P-05</td><td>중지</td><td>진행 상태에서만 가능, 되돌릴 수 없음. 이미 발급된 쿠폰은 유효기간 내 사용 가능</td></tr>
+    </table>
+
+    <h2>화면 목록</h2>
+    <table>
+      <tr><th>번호</th><th>화면</th><th>설명</th></tr>
+      <tr><td>2</td><td><a href="#t2">[BO] 쿠폰관리</a></td><td>쿠폰 목록 조회, 중지 (2-A 중지 확인 팝업 포함)</td></tr>
+      <tr><td>3</td><td><a href="#t3">[BO] 쿠폰등록</a></td><td>신규 쿠폰 등록</td></tr>
+    </table>
+
+    <h2>확인 필요</h2>
+    <p class="sb-lead" style="margin:0 0 6px">각 화면 설명의 <em class="sb-todo">…</em> 항목이 자동으로 모입니다.</p>
+    <ol id="sb-todo-list"></ol>
+
+    <h2>변경 이력</h2>
+    <table>
+      <tr><th>버전</th><th>날짜</th><th>내용</th></tr>
+      <tr><td>v1.1</td><td>2026-09-30</td><td>2-7 [중지] 버튼 노출 조건 변경</td></tr>
+      <tr><td>v1.0</td><td>2026-09-25</td><td>최초 작성</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ================= 2. 쿠폰관리 ================= -->
+<section class="sb-panel" id="t2" data-no="2">
+  <h1>[BO] 쿠폰관리</h1>
+  <p class="sb-lead">프로모션 &gt; 기획전 &gt; 쿠폰관리</p>
+
+  <div class="sb-block">
+    <div class="sb-screen"><div class="sb-canvas">
+      <div class="scr">
+        <div class="crumb">프로모션 &gt; 기획전 &gt; 쿠폰관리</div>
+        <h2>쿠폰관리</h2>
+        <div class="search" data-desc="1">
+          <label>기획전</label><select><option>전체</option><option>[91888] 가을 정기 기획전</option></select>
+          <label>쿠폰명</label><input placeholder="쿠폰명 입력">
+          <label>발급기간</label><div class="range" data-desc="2"><input value="2026-09-01"> ~ <input value="2026-09-30"></div>
+          <label>상태</label><div class="field" data-desc="3"><select><option>전체</option><option>대기</option><option>진행</option><option>종료</option><option>중지</option></select></div>
+          <div class="btns"><button class="btn">초기화</button><button class="btn pri">검색</button></div>
+        </div>
+        <div class="toolbar">
+          <div class="cnt">총 <b>24</b>건</div>
+          <button class="btn" data-desc="4">엑셀 다운로드</button>
+          <button class="btn pri" data-desc="5">쿠폰 등록</button>
+        </div>
+        <table data-desc="6">
+          <thead><tr><th>No</th><th>쿠폰명</th><th>기획전</th><th>할인</th><th>발급기간</th><th>발급/총수량</th><th>사용</th><th>상태</th><th>관리</th></tr></thead>
+          <tbody>
+            <tr><td>24</td><td class="l"><a href="#t3">가을 기획전 10% 쿠폰</a></td><td>91888</td><td>10% (최대 1만원)</td><td>09.01 ~ 09.30</td><td>1,204 / 3,000</td><td>512</td><td><span class="st run">진행</span></td><td data-desc="7"><button class="btn sm">중지</button></td></tr>
+            <tr><td>23</td><td class="l"><a href="#t3">가을 기획전 5천원 쿠폰</a></td><td>91888</td><td>5,000원</td><td>10.01 ~ 10.15</td><td>0 / 2,000</td><td>0</td><td><span class="st wait">대기</span></td><td>-</td></tr>
+            <tr><td>22</td><td class="l"><a href="#t3">여름 기획전 15% 쿠폰</a></td><td>91702</td><td>15% (최대 2만원)</td><td>08.01 ~ 08.31</td><td>3,000 / 3,000</td><td>2,318</td><td><span class="st end">종료</span></td><td>-</td></tr>
+            <tr><td>21</td><td class="l"><a href="#t3">여름 기획전 3천원 쿠폰</a></td><td>91702</td><td>3,000원</td><td>08.01 ~ 08.31</td><td>812 / 5,000</td><td>301</td><td><span class="st stop">중지</span></td><td>-</td></tr>
+          </tbody>
+        </table>
+        <div class="paging" data-desc="8"><span>&lt;</span><span class="cur">1</span><span>2</span><span>&gt;</span></div>
+      </div>
+    </div></div>
+
+    <aside class="sb-desc">
+      <h3>DESCRIPTION</h3>
+      <ol>
+        <li data-desc="1"><strong>검색 조건</strong>
+          <ul><li>기획전: 전체 + 등록된 기획전 목록 ([번호] 기획전명)</li>
+              <li>쿠폰명: 부분 일치, 2자 이상</li>
+              <li>[초기화] 모든 조건을 기본값으로</li></ul></li>
+        <li data-desc="2"><strong>발급기간</strong>
+          <ul><li>기본값: 오늘 기준 최근 1개월</li>
+              <li>시작일 &gt; 종료일이면 알럿 "시작일이 종료일보다 늦을 수 없습니다."</li>
+              <li>최대 1년 조회 <em class="sb-todo">1년 제한이 필요한지 운영팀 확인</em></li></ul></li>
+        <li data-desc="3"><strong>상태</strong>
+          <ul><li>전체 / 대기 / 진행 / 종료 / 중지 — 정의는 <a href="#P-02">P-02</a></li></ul></li>
+        <li data-desc="4"><strong>엑셀 다운로드</strong>
+          <ul><li>현재 검색 조건의 전체 결과(페이지 무관), 최대 10,000건</li></ul></li>
+        <li data-desc="5"><strong>쿠폰 등록</strong>
+          <ul><li>클릭 시 <a href="#t3">3. 쿠폰등록</a> 화면으로 이동</li></ul></li>
+        <li data-desc="6"><strong>목록</strong>
+          <ul><li>기본 정렬: 등록일 내림차순</li>
+              <li>쿠폰명 클릭 → 쿠폰 수정(3. 쿠폰등록 화면 재사용)</li>
+              <li>발급/총수량: 총수량 소진 시 발급 불가 <a href="#P-03">P-03</a></li></ul></li>
+        <li data-desc="7" data-rev="v1.1"><strong>[중지] 버튼</strong>
+          <ul><li>진행 상태에서만 노출 (v1.0: 대기·진행)</li>
+              <li>클릭 시 2-A 중지 확인 팝업 <a href="#P-05">P-05</a></li></ul></li>
+        <li data-desc="8"><strong>페이지</strong>
+          <ul><li>20건씩, 10페이지 단위 이동</li></ul></li>
+      </ol>
+    </aside>
+  </div>
+
+  <div class="sb-block">
+    <p class="sb-caption">2-A 중지 확인 팝업<span>[중지] 클릭 시</span></p>
+    <div class="sb-screen"><div class="sb-canvas" style="--canvas-w:720px">
+      <div class="scr dim">
+        <div class="modal" data-desc="9">
+          <p><b>쿠폰 발급을 중지하시겠습니까?</b></p>
+          <p class="sub">중지 후에는 다시 진행할 수 없습니다.<br>이미 발급된 쿠폰은 유효기간 내 사용 가능합니다.</p>
+          <div class="btns" data-desc="10"><button class="btn">취소</button><button class="btn pri">중지</button></div>
+        </div>
+      </div>
+    </div></div>
+
+    <aside class="sb-desc">
+      <h3>DESCRIPTION</h3>
+      <ol>
+        <li data-desc="9"><strong>중지 확인 팝업</strong>
+          <ul><li>문구 고정. 중지 정책은 <a href="#P-05">P-05</a></li></ul></li>
+        <li data-desc="10"><strong>버튼</strong>
+          <ul><li>[취소] 팝업 닫기</li>
+              <li>[중지] 상태를 '중지'로 변경 → 토스트 "쿠폰 발급이 중지되었습니다." → 목록 새로고침</li></ul></li>
+      </ol>
+    </aside>
+  </div>
+</section>
+
+<!-- ================= 3. 쿠폰등록 ================= -->
+<section class="sb-panel" id="t3" data-no="3">
+  <h1>[BO] 쿠폰등록</h1>
+  <p class="sb-lead">프로모션 &gt; 기획전 &gt; 쿠폰관리 &gt; 쿠폰 등록</p>
+
+  <div class="sb-block">
+    <div class="sb-screen"><div class="sb-canvas">
+      <div class="scr">
+        <div class="crumb">프로모션 &gt; 기획전 &gt; 쿠폰관리 &gt; 쿠폰 등록</div>
+        <h2>쿠폰 등록</h2>
+        <div class="form">
+          <div class="req">기획전</div><div><select style="width:320px"><option>[91888] 가을 정기 기획전</option></select></div>
+          <div class="req">쿠폰명</div><div><input style="width:320px" placeholder="최대 30자"></div>
+          <div class="req">쿠폰 유형</div><div><div class="radio" data-desc="1"><label><input type="radio" name="t" checked> 정률(%)</label><label><input type="radio" name="t"> 정액(원)</label></div></div>
+          <div class="req">할인</div><div><div class="field" data-desc="2"><input style="width:100px" value="10"> % · 최대 <input style="width:120px" value="10,000"> 원</div></div>
+          <div class="req">발급기간</div><div><div class="range" data-desc="3"><input value="2026-10-01"> ~ <input value="2026-10-15"></div></div>
+          <div class="req">총 발급수량</div><div><div class="field" data-desc="4"><input style="width:120px" value="3,000"> 매</div></div>
+        </div>
+        <div class="foot" data-desc="5"><button class="btn">취소</button><button class="btn pri">저장</button></div>
+      </div>
+    </div></div>
+
+    <aside class="sb-desc">
+      <h3>DESCRIPTION</h3>
+      <ol>
+        <li data-desc="1"><strong>쿠폰 유형</strong>
+          <ul><li>기본값: 정률. 유형별 정의 <a href="#P-01">P-01</a></li>
+              <li>유형 변경 시 할인 입력값 초기화</li></ul></li>
+        <li data-desc="2"><strong>할인</strong>
+          <ul><li>정률: 1~90%, 최대 할인금액 필수</li>
+              <li>정액: 100원 단위, 최대 할인금액 입력란 숨김</li>
+              <li><em class="sb-todo">정률 상한 90%가 맞는지 MD 확인</em></li></ul></li>
+        <li data-desc="3"><strong>발급기간</strong>
+          <ul><li>시작일은 오늘 이후만 선택 가능</li>
+              <li>저장 후 상태는 기간에 따라 자동 결정 <a href="#P-02">P-02</a></li></ul></li>
+        <li data-desc="4"><strong>총 발급수량</strong>
+          <ul><li>1~100,000 숫자만, 1인 1매 <a href="#P-03">P-03</a></li></ul></li>
+        <li data-desc="5"><strong>저장/취소</strong>
+          <ul><li>[저장] 필수값 누락 시 해당 항목으로 포커스 + 알럿 "{항목명}을 입력해 주세요."</li>
+              <li>[저장] 성공 → <a href="#t2">2. 쿠폰관리</a>로 이동</li>
+              <li>[취소] 입력값이 있으면 "작성 중인 내용이 삭제됩니다." 확인 후 이동</li></ul></li>
+      </ol>
+    </aside>
+  </div>
+</section>
+
+<script>
+/* 문서 틀 동작: 탭(해시) · 번호 마커 연결 · 확인 필요 수집 · Description ON/OFF */
+(function () {
+  var root = document.documentElement;
+  var panels = [].slice.call(document.querySelectorAll('.sb-panel'));
+  var tabs = [].slice.call(document.querySelectorAll('.sb-tab'));
+  var VOID = /^(INPUT|SELECT|TEXTAREA|IMG|BR|HR)$/;
+
+  function flash(el) {
+    el.classList.remove('sb-flash'); void el.offsetWidth; el.classList.add('sb-flash');
+    setTimeout(function () { el.classList.remove('sb-flash'); }, 1500);
+  }
+
+  /* 1) 탭: 해시가 가리키는 요소가 들어 있는 탭을 열고 그 위치로 스크롤 */
+  function route() {
+    var id = decodeURIComponent(location.hash.slice(1)) || panels[0].id;
+    var el = document.getElementById(id) || panels[0];
+    var panel = el.closest('.sb-panel') || panels[0];
+    panels.forEach(function (p) { p.classList.toggle('on', p === panel); });
+    tabs.forEach(function (t) {
+      var on = t.getAttribute('href') === '#' + panel.id;
+      t.classList.toggle('on', on); t.setAttribute('aria-selected', on);
+    });
+    if (el === panel) window.scrollTo(0, 0);
+    else { el.scrollIntoView({ block: 'center' }); flash(el); }
+  }
+  window.addEventListener('hashchange', route);
+
+  /* 2) 번호 마커: 블록마다 화면 요소[data-desc] ↔ 설명 li[data-desc] 연결 */
+  document.querySelectorAll('.sb-block').forEach(function (block) {
+    var panelNo = block.closest('.sb-panel').dataset.no;
+    var items = {}, hosts = {};
+    block.querySelectorAll('.sb-desc li[data-desc]').forEach(function (li) {
+      items[li.dataset.desc] = li;
+      li.id = 'd' + panelNo + '-' + li.dataset.desc;   // #d2-7 로 바로 링크 가능
+    });
+    block.querySelectorAll('.sb-screen [data-desc]').forEach(function (el) {
+      var no = el.dataset.desc, host = el;
+      if (VOID.test(el.tagName)) {                      // 자식을 못 갖는 요소는 부모에 부착
+        console.warn('[SB] ' + panelNo + '-' + no + ': input/select/img 대신 감싸는 요소에 data-desc를 다세요');
+        host = el.parentElement;
+      }
+      var cs = getComputedStyle(host);
+      if (cs.position === 'static') host.style.position = 'relative';
+      var mark = document.createElement('span');
+      mark.className = 'sb-mark' + (cs.overflow !== 'visible' ? ' sb-inset' : '');
+      mark.textContent = no;
+      mark.setAttribute('aria-hidden', 'true');
+      host.appendChild(mark);
+      (hosts[no] = hosts[no] || []).push({ el: el, mark: mark });
+      if (!items[no]) console.warn('[SB] ' + panelNo + '-' + no + ': 설명 항목이 없습니다');
+    });
+
+    function hl(no, on) {
+      (hosts[no] || []).forEach(function (h) { h.el.classList.toggle('sb-target-hl', on); });
+      if (items[no]) items[no].classList.toggle('sb-hl', on);
+    }
+    Object.keys(hosts).forEach(function (no) {
+      hosts[no].forEach(function (h) {
+        h.mark.addEventListener('mouseenter', function () { hl(no, true); });
+        h.mark.addEventListener('mouseleave', function () { hl(no, false); });
+        h.mark.addEventListener('click', function (e) {
+          e.preventDefault(); e.stopPropagation();
+          if (items[no]) { items[no].scrollIntoView({ block: 'nearest' }); flash(items[no]); }
+        });
+      });
+    });
+    Object.keys(items).forEach(function (no) {
+      var li = items[no];
+      if (!hosts[no]) { li.classList.add('sb-orphan'); console.warn('[SB] ' + panelNo + '-' + no + ': 화면에 해당 번호가 없습니다'); return; }
+      li.addEventListener('mouseenter', function () { hl(no, true); });
+      li.addEventListener('mouseleave', function () { hl(no, false); });
+      li.addEventListener('click', function (e) {
+        if (e.target.closest('a')) return;               // 정책 링크는 그대로 이동
+        var t = hosts[no][0].el;
+        t.scrollIntoView({ block: 'center', behavior: 'smooth' }); flash(t);
+      });
+    });
+  });
+
+  /* 3) 확인 필요: 설명 안의 .sb-todo 를 1페이지 목록으로 수집 */
+  var todoList = document.getElementById('sb-todo-list');
+  document.querySelectorAll('.sb-desc .sb-todo').forEach(function (todo) {
+    var li = todo.closest('li[data-desc]'), panelNo = li.closest('.sb-panel').dataset.no;
+    var title = li.querySelector('strong').textContent;
+    var item = document.createElement('li');
+    item.innerHTML = '<a href="#' + li.id + '">' + panelNo + '-' + li.dataset.desc + ' ' + title + '</a> — ';
+    item.appendChild(document.createTextNode(todo.textContent));
+    todoList.appendChild(item);
+  });
+  if (!todoList.children.length) todoList.innerHTML = '<li>없음</li>';
+
+  /* 4) Description ON/OFF (버튼 · D 키), 상태 기억 */
+  var KEY = 'sb-desc-off', btn = document.querySelector('.sb-toggle');
+  function setOff(off) {
+    root.classList.toggle('sb-off', off);
+    btn.setAttribute('aria-pressed', String(!off));
+    try { localStorage.setItem(KEY, off ? '1' : '0'); } catch (e) {}
+  }
+  try { setOff(localStorage.getItem(KEY) === '1'); } catch (e) { setOff(false); }
+  btn.addEventListener('click', function () { setOff(!root.classList.contains('sb-off')); });
+  document.addEventListener('keydown', function (e) {
+    var t = e.target;
+    if (e.code !== 'KeyD' || e.ctrlKey || e.metaKey || e.altKey) return;   // 한글 입력 상태에서도 동작
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable) return;
+    setOff(!root.classList.contains('sb-off'));
+  });
+
+  route();
+})();
+</script>
+</body>
+</html>
